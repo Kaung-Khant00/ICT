@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer components {
+  .section {
+    @apply lg:p-8 p-4;
+  }
+  .title {
+    @apply text-2xl md:text-3xl font-extrabold leading-tight;
+  }
+  .subtitle {
+    @apply text-xl md:text-2xl font-semibold opacity-90;
+  }
+  .desc {
+    @apply mt-6 text-lg opacity-70;
+  }
+  .hover-image {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+  .btn-hover {
+    @apply hover:scale-105;
+  }
+}
