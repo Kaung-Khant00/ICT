@@ -43,7 +43,6 @@ const School = () => {
         </div>
       </div>
 
-      {/* Bottom overlay shape */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-white/10 rounded-t-full blur-3xl"></div>
     </section>
   );

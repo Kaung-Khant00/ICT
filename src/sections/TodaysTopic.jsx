@@ -52,7 +52,6 @@ const TodaysTopic = () => {
       className="relative bg-white/95 dark:bg-emerald-900 text-gray-900 dark:text-white py-16 px-6 md:px-12"
       id="todays-topic"
     >
-      {/* Accent — solid shape (projector-friendly) */}
       <div
         id="accent-shape"
         className="absolute -top-6 w-36 h-36 bg-emerald-600 rounded-2xl z-2 shadow-lg "

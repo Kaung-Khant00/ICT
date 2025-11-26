@@ -115,7 +115,6 @@ const OurTeam = () => {
               </span>
             </div>
 
-            {/* Name & Role */}
             <h3 className="font-bold text-xl md:text-3xl">{name}</h3>
             <p className="text-lg opacity-90 mt-1">{role}</p>
           </div>

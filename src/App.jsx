@@ -9,6 +9,7 @@ import FourSources from "./sections/FourSources.jsx";
 import { useEffect, useState } from "react";
 import gsap from "gsap";
 import CircleDot from "./Components/Spec/CircleDot.jsx";
+import FourSourcesExamples from "./sections/FourSourcesExamples.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ function App() {
     };
   }, []);
   return (
-    <div>
+    <div className="overflow-x-clip">
       {loading && (
         <div
           id="loader"
@@ -51,6 +52,7 @@ function App() {
           <OurTeam />
           <AirPollutants />
           <FourSources />
+          <FourSourcesExamples />
         </>
       )}
     </div>

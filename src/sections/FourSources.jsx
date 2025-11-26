@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FourSourcesImage from "../assets/images/sources_of_airpollution.webp";
 import { MdForest } from "react-icons/md";
 import { PiFarmFill } from "react-icons/pi";
@@ -6,6 +6,23 @@ import { GiFactory } from "react-icons/gi";
 import { FaCar } from "react-icons/fa";
 import { BiCross } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
+import Card from "../Components/FourSources/Card";
+import DustStorm from "../assets/images/FourSourcesExamples/dust_storm.jpg";
+import ForestFire from "../assets/images/FourSourcesExamples/forest_fire.jpg";
+import Lightning from "../assets/images/FourSourcesExamples/lightning.jpg";
+import AreaSources1 from "../assets/images/FourSourcesExamples/area_sources1.jpg";
+import AreaSources2 from "../assets/images/FourSourcesExamples/area_sources2.webp";
+import AreaSources3 from "../assets/images/FourSourcesExamples/area_sources3.jpg";
+import StationarySources1 from "../assets/images/FourSourcesExamples/stationary_sources1.png";
+import StationarySources2 from "../assets/images/FourSourcesExamples/stationary_sources2.webp";
+import StationarySources3 from "../assets/images/FourSourcesExamples/stationary_sources3.jpg";
+import MobileSources1 from "../assets/images/FourSourcesExamples/mobile_sources1.jpg";
+import MobileSources2 from "../assets/images/FourSourcesExamples/mobile_sources2.webp";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function FourSources() {
   const [fsOpen, setFsOpen] = useState(false);
@@ -21,14 +38,40 @@ export default function FourSources() {
   const openViewer = () => setFsOpen(true);
   const closeViewer = () => setFsOpen(false);
 
+  /* horizontal scrolling animation */
+  const races = useRef(null);
+  useGSAP(() => {
+    let mm = gsap.matchMedia();
+    mm.add("(min-width:768px)", () => {
+      function getScrollAmount() {
+        let racesWidth = races.current.offsetWidth;
+        return -(racesWidth - innerWidth);
+      }
+      const tween = gsap.to(races.current, {
+        x: getScrollAmount(),
+        duration: 5,
+        ease: "none",
+      });
+      ScrollTrigger.create({
+        trigger: ".racesWrapper",
+        start: "top top",
+        end: () => `+=${getScrollAmount() * -1}`,
+        pin: true,
+        animation: tween,
+        scrub: 1,
+      });
+    });
+  }, []);
   return (
     <>
-      <section className="section py-16 bg-linear-to-b from-base-200 to-base-300 ">
-        <div className="container mx-auto px-6">
+      <section
+        className="max-h-screen relative z-1 section py-16 bg-linear-to-b from-base-200 to-base-300 flex flex-col md:flex-row gap-40 md:w-[4000px] items-center racesWrapper"
+        ref={races}
+      >
+        <div className="container px-6 md:min-w-[97vw] ">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            {/* Left: image */}
             <div
-              className="fs-image relative rounded-2xl overflow-hidden shadow-xl cursor-zoom-in z-10"
+              className="fs-image relative rounded-2xl overflow-hidden shadow-xl cursor-zoom-in z-10 "
               onClick={openViewer}
               role="button"
               tabIndex={0}
@@ -99,9 +142,44 @@ export default function FourSources() {
             </div>
           </div>
         </div>
+        <div className="h-full grid md:grid-cols-4 md:grid-rows-1 grid-cols-1 grid-rows-4 justify-items-center gap-10 md:flex-1 md:pe-[25vw] relative z-10">
+          <Card
+            images={[ForestFire, DustStorm, Lightning]}
+            title={"Natural Sources"}
+            description={
+              "Natural sources are pollution that comes from nature itself without human activity. These events release gases or particles into the air, but they are part of Earth’s natural processes."
+            }
+          />
+          <Card
+            images={[AreaSources1, AreaSources2, AreaSources3]}
+            title={"Area Sources"}
+            description={
+              "Area sources are small, scattered activities that release pollution over a wide region, like small factories, open waste burning, construction dust, and agricultural fields. Together, they create significant pollution across an area."
+            }
+          />
+
+          <Card
+            images={[
+              StationarySources1,
+              StationarySources2,
+              StationarySources3,
+            ]}
+            title={"Stationary Sources"}
+            description={
+              "Stationary sources are fixed places that release pollution, such as factories, power plants, and refineries. They produce pollutants continuously from burning fuel, chemical reactions, or manufacturing processes."
+            }
+          />
+
+          <Card
+            images={[MobileSources1, MobileSources2]}
+            title={"Mobile Sources"}
+            description={
+              "Mobile sources are vehicles like cars, trucks, buses, ships, and airplanes that emit gases and particulate matter. Reducing pollution includes using EVs, public transport, carpooling, walking, or cycling."
+            }
+          />
+        </div>
       </section>
 
-      {/* Simple, beginner-friendly fullscreen overlay */}
       {fsOpen && (
         <div
           className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6"
@@ -121,7 +199,6 @@ export default function FourSources() {
             <IoClose size={30} />
           </button>
 
-          {/* Image: stop propagation so clicking it doesn't close overlay */}
           <img
             src={FourSourcesImage}
             alt="Full view"
